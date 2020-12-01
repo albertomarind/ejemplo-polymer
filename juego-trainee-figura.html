@@ -1,0 +1,83 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+
+<dom-module id="juego-trainee-figura">
+    <template>
+        <style>
+            :host {
+                display: inline-block;
+            }
+
+            .figura {
+                width: 100px;
+                height: 100px;
+                background-color: gray;
+                margin: 5px;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .color-ganador {
+                background-color: green;
+            }
+
+            .color-perdedor {
+                background-color: red;
+            }
+
+            .figura>span {
+                font-size: 20px;
+                font-weight: 700;
+                color: white;
+            }
+        </style>
+        <div class="figura" on-click="cambiarColor" style$="background-color:{{color}}">
+        </div>
+    </template>
+    <script>
+        class JuegoTraineeFigura extends Polymer.Element {
+            constructor() {
+                super();
+            }
+            static get properties() {
+                return {
+                    esGanador: {
+                        type: Boolean,
+                        value: false
+                    },
+                    estaSeleccionada: {
+                        type: Boolean,
+                        value: false
+                    },
+                    color: {
+                        type: String,
+                        computed: '_obtenerColor(estaSeleccionada,esGanador)'
+                    }
+                }
+            }
+            _obtenerColor(estaSeleccionada, esGanador) {
+                if (estaSeleccionada && esGanador) {
+                    return 'green';
+                } else if (estaSeleccionada && !esGanador) {
+                    return 'red';
+                } else {
+                    return 'gray';
+                }
+            }
+
+            static get is() {
+                return 'juego-trainee-figura';
+            }
+
+            cambiarColor() {
+                this.set('estaSeleccionada', true);
+                if (this.get('esGanador')) {
+                    alert('ganaste');
+                }
+            }
+        }
+        customElements.define(JuegoTraineeFigura.is, JuegoTraineeFigura);
+    </script>
+</dom-module>

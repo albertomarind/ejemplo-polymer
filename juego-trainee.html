@@ -1,0 +1,64 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-if.html">
+
+
+<link rel="import" href="/juego-trainee-figura.html">
+
+<dom-module id="juego-trainee">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <template is="dom-repeat" items="{{figuras}}" as="figura">
+            <juego-trainee-figura es-ganador="{{figura.esGanador}}" esta-seleccionada="{{figura.estaSeleccionada}}">
+            </juego-trainee-figura>
+        </template>
+    </template>
+    <script>
+        class JuegoTrainee extends Polymer.Element {
+            constructor() {
+                super();
+            }
+            static get properties() {
+                return {
+                    figuras: {
+                        type: Array,
+                        value: [
+                        ]
+                    }
+                }
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+                this.crearArreglo();
+            }
+
+            crearArreglo() {
+                let miArreglo = [];
+                for (let index = 0; index < 10; index++) {
+                    if (index === 5) {
+                        miArreglo.push({
+                            esGanador: true,
+                            estaSeleccionada: false
+                        });
+                    } else {
+                        miArreglo.push({
+                            esGanador: false,
+                            estaSeleccionada: false
+                        });
+                    }
+                }
+                this.set('figuras', miArreglo);
+            }
+
+            static get is() {
+                return 'juego-trainee';
+            }
+        }
+        customElements.define(JuegoTrainee.is, JuegoTrainee);
+    </script>
+</dom-module>
